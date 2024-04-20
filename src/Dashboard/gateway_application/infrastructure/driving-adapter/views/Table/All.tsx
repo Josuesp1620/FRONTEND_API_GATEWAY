@@ -1,42 +1,23 @@
-import {
-    Copy,
-    MoreHorizontal,
-    RefreshCcwDot,
-} from 'lucide-react'
+import { Copy, MoreHorizontal, RefreshCcwDot, } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card'
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table'
-import {
-    TabsContent,
-} from '@/components/ui/tabs'
+import { Card, CardContent, CardHeader, CardTitle, } from '@/components/ui/card'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger, } from '@/components/ui/dropdown-menu'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from '@/components/ui/table'
+import { TabsContent, } from '@/components/ui/tabs'
 import { Input } from '@/components/ui/input'
 import React from 'react'
-
 import clsx from 'clsx'
+import { fetchAll } from '@/redux/features/gatewayApplicationSlice'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { GatewayApplicationEntity as Entity } from '@/Dashboard/gateway_application/domain/entities'
 
 export const TableAll = () => {
+    const dispatch = useAppDispatch();
+    const entities = useAppSelector((state) => state.gatewayApplicationReducer);
+
     React.useEffect(() => {
-        
+        dispatch(fetchAll())
     }, []);
     
     return (
@@ -60,8 +41,8 @@ export const TableAll = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {entities.length !== 0 && (
-                        entities.map((entity) => (
+                    {entities.gatewayApplication && entities.gatewayApplication.length !== 0 && (
+                        entities.gatewayApplication?.map((entity : Entity) => (
                             <TableRow>
 
                             <TableCell className='font-medium'>
