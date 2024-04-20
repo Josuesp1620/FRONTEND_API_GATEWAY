@@ -15,7 +15,7 @@ class GatewayApplicationAdapter {
 
   async getAll(): Promise<CustomReponse<Entity[]>> {
     try {
-      const response : CustomReponse<Entity[]> = await this._axios.get(`/gateway-application/all`);
+      const response : CustomReponse<Entity[]> = await this._axios.get(`/gateway-application/get-all`);
       return response;
     } catch (error) {
       console.error('Error al obtener las aplicaciones:', error);
