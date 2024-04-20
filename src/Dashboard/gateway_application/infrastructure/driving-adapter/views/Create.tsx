@@ -17,8 +17,11 @@ import { GatewayApplicationEntity as Entity } from '@/Dashboard/gateway_applicat
 import { schema } from '../validations/GatewayApplication'
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react'
+import { useAppDispatch } from '@/redux/hooks'
+import { addGatewayApplication } from '@/redux/features/gatewayApplicationSlice'
 
 export function DialogCreate() {
+  const dispatch = useAppDispatch();
 
   const [open, setOpen] = React.useState(false)
 
@@ -30,11 +33,12 @@ export function DialogCreate() {
     formState: { errors },
   } = useForm<Entity>({ resolver: zodResolver(schema) });
 
-  const create = async (data : Entity) => {
+  const create = async (data : Entity) => {    
     const axiosRepository = new ImplementationAxios()
     const useCase = new UseCase(axiosRepository)    
     try {
-      console.log(await useCase.run(data))
+      const entity = await useCase.run(data)
+      dispatch(addGatewayApplication(entity))
       setOpen(false)
       reset()
     }catch(e) {
