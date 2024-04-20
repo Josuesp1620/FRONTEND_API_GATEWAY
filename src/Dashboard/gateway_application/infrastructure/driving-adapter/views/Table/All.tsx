@@ -31,30 +31,12 @@ import {
 } from '@/components/ui/tabs'
 import { Input } from '@/components/ui/input'
 import React from 'react'
-import { ImplementationAxios } from '../../../implementation/axios'
-import { GetAlldUseCase as UseCase } from '@/Dashboard/gateway_application/application/use_cases'
-import { GatewayApplicationEntity as Entity } from '@/Dashboard/gateway_application/domain/entities'
+
 import clsx from 'clsx'
 
 export const TableAll = () => {
-
-    const [entities, setEntities] = React.useState<Entity[]>([])
-
     React.useEffect(() => {
-        const fetchData = async () => {
-            const axiosRepository = new ImplementationAxios();
-            const useCase = new UseCase(axiosRepository);
-            try {
-                const entities = await useCase.run()
-                if(entities){
-                    setEntities(entities);
-                }                
-            } catch (e) {
-                console.log(e);
-            }
-        };
-    
-        fetchData();
+        
     }, []);
     
     return (
