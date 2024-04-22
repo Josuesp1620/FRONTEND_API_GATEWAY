@@ -1,7 +1,7 @@
 import { GatewayApplicationEntity as Entity } from '@/Dashboard/gateway_application/domain/entities'
 import { GatewayApplicationRepository as Repository } from '@/Dashboard/gateway_application/domain/repositories'
 
-export class GetAlldUseCase {
+export class GetAllUseCase {
 
     private readonly _repository: Repository
 

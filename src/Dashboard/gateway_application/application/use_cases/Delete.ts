@@ -1,7 +1,6 @@
-import { GatewayApplicationEntity as Entity } from '@/Dashboard/gateway_application/domain/entities'
 import { GatewayApplicationRepository as Repository } from '@/Dashboard/gateway_application/domain/repositories'
 
-export class GetAlldUseCase {
+export class DeleteUseCase {
 
     private readonly _repository: Repository
 
@@ -11,8 +10,10 @@ export class GetAlldUseCase {
         this._repository = repository
     }
 
-    async run(): Promise<Entity[] | null > {
-        const entities: Entity[] | null = await this._repository.getAll()
-        return entities
+    async run(id : string): Promise<void | null > {
+        const deleted = await this._repository.delete(id)
+        if(deleted === null){
+            return null
+        }
     }
 }

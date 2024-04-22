@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GetAlldUseCase as UseCase } from '@/Dashboard/gateway_application/application/use_cases'
+import { GetAllUseCase as UseCase } from '@/Dashboard/gateway_application/application/use_cases'
 import { GatewayApplicationEntity as Entity } from '@/Dashboard/gateway_application/domain/entities'
 import { ImplementationAxios } from "@/Dashboard/gateway_application/infrastructure/implementation/axios";
 

@@ -33,8 +33,12 @@ class ImplementationAxios implements Repository {
         }
     }    
 
-    async delete (id: string) : Promise<void> {
-        await Axios.delete(id)
+    async delete (id: string) : Promise<void | null > {
+        try {
+            await Axios.delete(id)
+        }catch (e) {
+            return null
+        }
     }
 
     async getById(id: string): Promise<Entity | null> {

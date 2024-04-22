@@ -29,8 +29,9 @@ export const TableAll = () => {
                 <CardTitle>Aplicaciones</CardTitle>
             </CardHeader>
             <CardContent>
+            <ScrollArea className="h-96 w-full">
+
                 <Table>
-                    <ScrollArea className="h-96 w-full">
                         <TableHeader>
                             <TableRow>
                                 <TableHead>Nombre</TableHead>
@@ -50,7 +51,7 @@ export const TableAll = () => {
                         <TableBody className='w-auto'>
                         {entities.gatewayApplication && entities.gatewayApplication.length !== 0 && (
                                 entities.gatewayApplication?.map((entity : Entity) => (
-                                    <TableRow>
+                                    <TableRow key={entity.id}>
 
                                     <TableCell className='font-medium'>
                                         {entity.name}
@@ -63,11 +64,10 @@ export const TableAll = () => {
                                     <TableCell>
                                         <div className='flex items-center space-x-2'>
                                             <Input                            
-                                            id='link'
-                                            type='text'
-                                            value={entity.api_key}
-                                            defaultValue={entity.api_key}
-                                            readOnly
+                                                id='link'
+                                                type='text'
+                                                defaultValue={entity.api_key}
+                                                readOnly
                                             />
                                             <Button type='submit' size='sm' className='px-3'>
                                                 <span className='sr-only'>Copy</span>
@@ -78,6 +78,7 @@ export const TableAll = () => {
                                                 <RefreshCcwDot className='h-4 w-4'/>
                                             </Button>
                                         </div>
+
                                     </TableCell>
 
                                         
@@ -108,8 +109,9 @@ export const TableAll = () => {
                                 ))
                             )}
                         </TableBody>
-                    </ScrollArea>
                 </Table>
+                </ScrollArea>
+
             </CardContent>                
             </Card>
         </TabsContent>

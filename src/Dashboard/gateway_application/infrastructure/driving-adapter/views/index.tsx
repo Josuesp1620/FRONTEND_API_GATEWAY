@@ -21,8 +21,8 @@ export const GatewayApplication = () => {
                 </div>
 
                 <TableAll />
-                <TableActive />
-                <TableDisable />
+                {/* <TableActive />
+                <TableDisable /> */}
             </Tabs>
       </main>
     );

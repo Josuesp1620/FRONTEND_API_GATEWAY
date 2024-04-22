@@ -55,7 +55,7 @@ class GatewayApplicationAdapter {
 
   async delete(id: string): Promise<CustomReponse<null>> {
     try {
-      const response : CustomReponse<null> = await this._axios.get(`/gateway-application/delete?id=${id}`);
+      const response : CustomReponse<null> = await this._axios.delete(`/gateway-application/delete?id=${id}`);
       return response;
     } catch (error) {
       console.error('Error al eliminar la aplicación:', error);

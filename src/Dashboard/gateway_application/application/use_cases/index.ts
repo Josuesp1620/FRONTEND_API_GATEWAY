@@ -1,9 +1,11 @@
 import { CreateUseCase } from './Create'
 import { GetByIdUseCase } from './GetById'
-import { GetAlldUseCase } from './GetAll'
+import { GetAllUseCase } from './GetAll'
+import { DeleteUseCase } from './Delete'
 
 export {
     CreateUseCase,
     GetByIdUseCase,
-    GetAlldUseCase,
+    GetAllUseCase,
+    DeleteUseCase,    
 }
