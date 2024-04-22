@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GetAllUseCase as UseCase } from '@/Dashboard/gateway_application/application/use_cases'
-import { GatewayApplicationEntity as Entity } from '@/Dashboard/gateway_application/domain/entities'
-import { ImplementationAxios } from "@/Dashboard/gateway_application/infrastructure/implementation/axios";
+import { GetAllUseCase as UseCase } from '@/Dashboard/application/gateway_application/use_cases'
+import { GatewayApplicationEntity as Entity } from '@/Dashboard/domain/gateway_application/entities'
+import { ImplementationAxios } from "@/Dashboard/infrastructure/gateway_application/implementation/axios";
 
-type gatewayApplicationSlice = {
-    gatewayApplication: Entity[] | null;
+type GatewayApplicationSlice = {
+    gatewayApplication: Entity[] | null;    
 };
 
-const initialState: gatewayApplicationSlice = {
+const initialState: GatewayApplicationSlice = {
   gatewayApplication: null,
 };
 
@@ -17,10 +17,11 @@ export const fetchAll = createAsyncThunk(
     try {      
       const axiosRepository = new ImplementationAxios();
       const useCase = new UseCase(axiosRepository);
-      const entities : Entity[] | null = await useCase.run()
+      const entities: Entity[] | null = await useCase.run()
       return entities
     } catch (error) {
       console.error("Error fetching:", error);
+      throw error; // Propaga el error para que Redux Toolkit lo maneje
     }
   },
 )
@@ -34,10 +35,20 @@ export const gateway_application_slice = createSlice({
     },
     deleteGatewayApplication: (state, action: PayloadAction<{ id: string }>) => {
       state.gatewayApplication = state.gatewayApplication!.filter(app => app.id !== action.payload.id);
-    },  
+    }, 
+    updateGatewayApplication: (state, action: PayloadAction<{ id: string, field: string, value: any }>) => {
+      console.log(state.gatewayApplication )
+      state.gatewayApplication = state.gatewayApplication!.map(app => {
+        console.log(app.id === action.payload.id)
+        if (app.id === action.payload.id) {
+          return { ...app, [action.payload.field]: action.payload.value };
+        }
+        return app;
+      });
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchAll.fulfilled, (state:gatewayApplicationSlice, action:any) => {
+    builder.addCase(fetchAll.fulfilled, (state: GatewayApplicationSlice, action: PayloadAction<Entity[] | null>) => {
       state.gatewayApplication = action.payload
     })
   },
@@ -46,7 +57,11 @@ export const gateway_application_slice = createSlice({
 
 export const {
   addGatewayApplication, 
-  deleteGatewayApplication
+  deleteGatewayApplication,
+  updateGatewayApplication,
 } = gateway_application_slice.actions;
 
 export default gateway_application_slice.reducer;
+
+// Llamada a fetchAll en el mismo slice para ejecutarla al inicio
+fetchAll(); // Esto lanzará la acción fetchAll al inicio para obtener los datos de la aplicación del gateway
