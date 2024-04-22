@@ -1,11 +1,10 @@
-import { ChevronLeft, Copy, PlusCircle, } from "lucide-react"
+import { ChevronLeft, Copy, RefreshCcwDot, } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select"
-import { Table, TableBody, TableHead, TableHeader, TableRow, } from "@/components/ui/table"
 import { Link } from "react-router-dom"
 import { useParams } from 'react-router-dom';
 import React from "react"
@@ -14,6 +13,8 @@ import clsx from "clsx"
 import { updateState } from "../../helpers/updateState"
 import { GatewayApplicationEntity as Entity} from "@/Dashboard/domain/gateway_application/entities"
 import CopyToClipboard from "react-copy-to-clipboard"
+import { updateApiKeyEntity } from "@/Dashboard/infrastructure/gateway_application/driving-adapter/helpers/regenerateApiKey"
+import { CadEndpoint } from "@/Dashboard/infrastructure/gateway_endpoint/driving-adapter/views"
 
 export function EditView() {
   const [editMode, setEditMode] = React.useState<boolean>(false);
@@ -90,43 +91,8 @@ export function EditView() {
                 </div>
               </CardContent>
             </Card>
-            <Card x-chunk="dashboard-07-chunk-1">
-              <CardHeader className="flex">
-              <div className="flex items-center gap-4">
 
-                <h1 className="flex-1 text-xl font-semibold ">
-                  Endpoints
-                </h1>
-                <div className="items-center gap-2 md:ml-auto md:flex">              
-                  <Button size='sm' className='h-8 gap-1 ml-auto'>
-                    <PlusCircle className='h-3.5 w-3.5' />
-                    <span className='sr-only sm:not-sr-only sm:whitespace-nowrap'>
-                      Add
-                    </span>
-                  </Button> 
-                </div>
-                </div>
-
-
-              </CardHeader>
-              <CardContent>
-                <Table>
-                  <TableHeader>                  
-                    <TableRow>
-                      <TableHead className="w-[100px]">Route</TableHead>
-                      <TableHead>Method</TableHead>
-                      <TableHead>State</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-
-                  </TableBody>
-                </Table>
-              </CardContent>
-              <CardFooter className="justify-center border-t p-4">
-                
-              </CardFooter>
-            </Card>
+            <CadEndpoint app_id={id!}/>
             
           </div>
           <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
@@ -172,7 +138,7 @@ export function EditView() {
                   <Input                            
                       id='link'
                       type='text'
-                      defaultValue={filteredEntity?.api_key}
+                      value={filteredEntity?.api_key}
                       readOnly
                   />
                   <CopyToClipboard text={filteredEntity?.api_key!}>
@@ -181,6 +147,10 @@ export function EditView() {
                           <Copy className='h-4 w-4' />
                       </Button>
                   </CopyToClipboard>
+                  <Button type='submit' size='sm' className='px-3' onClick={() => updateApiKeyEntity({id: filteredEntity?.id!, dispatch})}>
+                      <span className='sr-only'>Regenerate</span>
+                      <RefreshCcwDot className='h-4 w-4'/>
+                  </Button>
                 </div>
               </CardContent>
             </Card>

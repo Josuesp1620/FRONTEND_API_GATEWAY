@@ -1,5 +1,5 @@
-import { GatewayEndpointEntity } from './GatewayEndpoint'
+import { GatewayEndPointEntity } from './GatewayEndpoint'
 
 export type {
-    GatewayEndpointEntity
+    GatewayEndPointEntity
 }

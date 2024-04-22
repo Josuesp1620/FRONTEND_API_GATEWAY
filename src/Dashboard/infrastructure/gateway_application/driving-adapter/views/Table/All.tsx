@@ -13,7 +13,6 @@ import { GatewayApplicationEntity as Entity } from '@/Dashboard/domain/gateway_a
 import { deleteEntity } from '../../helpers/deleteEntity'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Link } from 'react-router-dom'
-import { updateApiKeyEntity } from '../../helpers/regenerateApiKey'
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 export const TableAll = () => {
@@ -64,7 +63,7 @@ export const TableAll = () => {
                                         <div className='flex items-center space-x-2'>
                                             <Input                            
                                                 id='link'
-                                                type='text'
+                                                type='password'
                                                 value={entity.api_key}
                                                 readOnly
                                             />
@@ -73,12 +72,7 @@ export const TableAll = () => {
                                                     <span className='sr-only'>Copy</span>
                                                     <Copy className='h-4 w-4' />
                                                 </Button>
-                                            </CopyToClipboard>
-                                            
-                                            <Button type='submit' size='sm' className='px-3' onClick={() => updateApiKeyEntity({id: entity?.id!, dispatch})}>
-                                                <span className='sr-only'>Regenerate</span>
-                                                <RefreshCcwDot className='h-4 w-4'/>
-                                            </Button>
+                                            </CopyToClipboard>                                        
                                         </div>
                                     </TableCell>                                                                    
             

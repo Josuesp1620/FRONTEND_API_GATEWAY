@@ -1,10 +1,9 @@
-export interface GatewayEndpointEntity {
+export interface GatewayEndPointEntity {
     id?: string
-    name?: string
-    upstream_url?: string
-    active?: boolean
-    origin_urls?: string;
-    api_key?: string
+    app_id?: string
+    route?: string
+    method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
+    active?: boolean    
     createdAt?: Date
     updatedAt?: Date
 }
