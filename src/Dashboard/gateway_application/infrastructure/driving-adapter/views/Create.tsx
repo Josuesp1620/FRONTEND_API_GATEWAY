@@ -1,24 +1,15 @@
 import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { PlusCircle } from 'lucide-react'
 import { useForm } from 'react-hook-form';
-import { ImplementationAxios } from '../../implementation/axios'
-import { CreateUseCase as UseCase } from '@/Dashboard/gateway_application/application/use_cases'
 import { GatewayApplicationEntity as Entity } from '@/Dashboard/gateway_application/domain/entities'
 import { schema } from '../validations/GatewayApplication'
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react'
 import { useAppDispatch } from '@/redux/hooks'
-import { addGatewayApplication } from '@/redux/features/gatewayApplicationSlice'
+import { createEntity } from '../helpers/createEntity'
 
 export function DialogCreate() {
   const dispatch = useAppDispatch();
@@ -28,23 +19,9 @@ export function DialogCreate() {
   const {
     register,
     reset,
-
     handleSubmit,
     formState: { errors },
   } = useForm<Entity>({ resolver: zodResolver(schema) });
-
-  const create = async (data : Entity) => {    
-    const axiosRepository = new ImplementationAxios()
-    const useCase = new UseCase(axiosRepository)    
-    try {
-      const entity = await useCase.run(data)
-      dispatch(addGatewayApplication(entity))
-      setOpen(false)
-      reset()
-    }catch(e) {
-      console.log(e)
-    }
-  }
   
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -96,14 +73,13 @@ export function DialogCreate() {
               className='col-span-3'
             />
           </div>
-          {errors.origin_urls && (<p className='text-right'>{errors.origin_urls.message}</p>)}
         </form>
         <DialogFooter>
           <Button type='submit' variant={'outline'} onClick={() => {
             setOpen(false)
             reset()
           }}>Cancel</Button>
-          <Button type='submit' onClick={handleSubmit(async (data) => await create(data))}>Guardar</Button>
+          <Button type='submit' onClick={handleSubmit(async (data) => await createEntity({data, dispatch, setOpen, reset}))}>Guardar</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
