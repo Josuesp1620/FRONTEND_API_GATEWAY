@@ -1,5 +1,5 @@
-import { GatewayApplicationRepository } from './GatewayApplication'
+import { GatewayEndpointRepository } from './GatewayEndpoint'
 
 export type {
-    GatewayApplicationRepository
+    GatewayEndpointRepository
 }

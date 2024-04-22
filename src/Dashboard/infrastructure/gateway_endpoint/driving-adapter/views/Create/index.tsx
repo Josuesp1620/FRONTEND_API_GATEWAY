@@ -5,15 +5,15 @@ import { Label } from '@/components/ui/label'
 import { PlusCircle } from 'lucide-react'
 import { useForm } from 'react-hook-form';
 import { GatewayEndPointEntity as Entity } from '@/Dashboard/domain/gateway_endpoint/entities'
-import { schema } from '../../validations/GatewayApplication'
-import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react'
 import { useAppDispatch } from '@/redux/hooks'
 import { createEntity } from '../../helpers/createEntity'
 import { Switch } from '@/components/ui/switch'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { ROUTE_METHOD } from '@/Dashboard/domain/gateway_endpoint/types'
 
 export function DialogCreate({app_id}:{app_id : string}) {
+
   const dispatch = useAppDispatch();
 
   const [open, setOpen] = React.useState(false)
@@ -21,9 +21,13 @@ export function DialogCreate({app_id}:{app_id : string}) {
   const {
     register,
     reset,
+    setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm<Entity>({ resolver: zodResolver(schema) });
+  } = useForm<Entity>({ defaultValues: {
+    method: 'GET',
+    active: false
+  } });
   
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -41,14 +45,14 @@ export function DialogCreate({app_id}:{app_id : string}) {
         </DialogHeader>
         <form className='grid gap-4 py-4'>
           <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='name' className='text-left'>
+            <Label htmlFor='route' className='text-left'>
               Route
             </Label>
             <Input
-              {...register('route',  { required: true })}
               id='route'
               placeholder='/path'
               className='col-span-3'
+              {...register('route',  { required: true })}
             />
           </div>
           {errors.route && (<p className='text-right'>{errors.route.message}</p>)}
@@ -56,8 +60,8 @@ export function DialogCreate({app_id}:{app_id : string}) {
             <Label htmlFor='method' className='text-left'>
               Method
             </Label>
-            <Select defaultValue={'GET'}> 
-              <SelectTrigger id="status" aria-label="Select status" className='col-span-3'>
+            <Select defaultValue={'GET'} onValueChange={(e : ROUTE_METHOD) => setValue('method', e)}> 
+              <SelectTrigger id="method" aria-label="Select status" className='col-span-3'>
                 <SelectValue placeholder="Select State" />
               </SelectTrigger>
               <SelectContent className=''>
@@ -66,7 +70,6 @@ export function DialogCreate({app_id}:{app_id : string}) {
                 <SelectItem value="PUT">PUT</SelectItem>
                 <SelectItem value="DELETE">DELETE</SelectItem>
                 <SelectItem value="PATCH">PATCH</SelectItem>
-
               </SelectContent>
             </Select>
           </div>
@@ -75,7 +78,7 @@ export function DialogCreate({app_id}:{app_id : string}) {
             <Label htmlFor='active' className='text-left'>
               State
             </Label>
-            <Switch />
+            <Switch onCheckedChange={(e)=> setValue('active', e)} />
           </div>
         </form>
         <DialogFooter>
@@ -83,7 +86,7 @@ export function DialogCreate({app_id}:{app_id : string}) {
             setOpen(false)
             reset()
           }}>Cancel</Button>
-          <Button type='submit' onClick={handleSubmit(async (data) => await createEntity({data, dispatch, setOpen, reset}))}>Guardar</Button>
+          <Button type='submit' onClick={handleSubmit(async (data) => await createEntity({data, app_id, dispatch, setOpen, reset}))}>Guardar</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

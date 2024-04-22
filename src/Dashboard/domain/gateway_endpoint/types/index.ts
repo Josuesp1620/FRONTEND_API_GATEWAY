@@ -1,0 +1,1 @@
+export type ROUTE_METHOD = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'

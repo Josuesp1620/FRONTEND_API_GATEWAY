@@ -1,4 +1,4 @@
-import { GatewayEndpointEntity as Entity } from '../entities'
+import { GatewayEndPointEntity as Entity } from '../entities'
 
 export interface GatewayEndpointRepository {
     getAll: () => Promise<Entity[] | null>

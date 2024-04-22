@@ -1,8 +1,8 @@
-import { GatewayApplicationEntity as Entity } from '@/Dashboard/domain/gateway_application/entities';
+import { GatewayEndPointEntity as Entity } from '@/Dashboard/domain/gateway_endpoint/entities';
 import { CustomReponse } from '@/shared/entities/Response';
 import { AxiosConfig } from '@/shared/services/axios';
 
-class GatewayApplicationAdapter {
+class GatewayEndPointAdapter {
   private _axios: AxiosConfig;
 
   constructor(baseUrl: string) {
@@ -15,58 +15,58 @@ class GatewayApplicationAdapter {
 
   async getAll(): Promise<CustomReponse<Entity[]>> {
     try {
-      const response : CustomReponse<Entity[]> = await this._axios.get(`/gateway-application/get-all`);
+      const response : CustomReponse<Entity[]> = await this._axios.get(`/gateway-endpoint/get-all`);
       return response;
     } catch (error) {
-      console.error('Error al obtener las aplicaciones:', error);
+      console.error('Error al obtener los endpoints:', error);
       throw error;
     }
   }
 
   async getById(id: string): Promise<CustomReponse<Entity>> {
     try {
-      const response : CustomReponse<Entity> = await this._axios.get(`/gateway-application/get-by-id?id=${id}`);
+      const response : CustomReponse<Entity> = await this._axios.get(`/gateway-endpoint/get-by-id?id=${id}`);
       return response;
     } catch (error) {
-      console.error('Error al obtener la aplicación por ID:', error);
+      console.error('Error al obtener el endpoint por ID:', error);
       throw error;
     }
   }
 
   async create(data: Entity): Promise<CustomReponse<Entity>> {
     try {
-      const response : CustomReponse<Entity> = await this._axios.post(`/gateway-application/create`, data);
+      const response : CustomReponse<Entity> = await this._axios.post(`/gateway-endpoint/create`, data);
       return response;
     } catch (error) {
-      console.error('Error al crear la aplicación:', error);
+      console.error('Error al crear el endpoint:', error);
       throw error;
     }
   }
 
   async update(data: Entity): Promise<CustomReponse<Entity>> {
     try {
-      const response : CustomReponse<Entity> = await this._axios.put(`/gateway-application/update`, data);
+      const response : CustomReponse<Entity> = await this._axios.put(`/gateway-endpoint/update`, data);
       return response;
     } catch (error) {
-      console.error('Error al crear la aplicación:', error);
+      console.error('Error al crear el endpoint:', error);
       throw error;
     }
   }
 
   async delete(id: string): Promise<CustomReponse<null>> {
     try {
-      const response : CustomReponse<null> = await this._axios.delete(`/gateway-application/delete?id=${id}`);
+      const response : CustomReponse<null> = await this._axios.delete(`/gateway-endpoint/delete?id=${id}`);
       return response;
     } catch (error) {
-      console.error('Error al eliminar la aplicación:', error);
+      console.error('Error al eliminar el endpoint:', error);
       throw error;
     }
   }
 }
 
 const base_url : string = `${import.meta.env.VITE_API_URL}`;
-const GatewayApplicationAxios = new GatewayApplicationAdapter(base_url);
+const GatewayEndPointAxios = new GatewayEndPointAdapter(base_url);
 
 export {
-  GatewayApplicationAxios
+  GatewayEndPointAxios
 };

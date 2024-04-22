@@ -1,6 +1,6 @@
-import { GatewayApplicationEntity as Entity } from "@/Dashboard/domain/gateway_application/entities";
-import { GatewayApplicationRepository as Repository } from "@/Dashboard/domain/gateway_application/repositories";
-import { GatewayApplicationAxios as Axios } from '@/Dashboard/infrastructure/gateway_application/driven-adapter/axios'
+import { GatewayEndPointEntity as Entity } from "@/Dashboard/domain/gateway_endpoint/entities";
+import { GatewayEndpointRepository as Repository } from "@/Dashboard/domain/gateway_endpoint/repositories";
+import { GatewayEndPointAxios as Axios } from '@/Dashboard/infrastructure/gateway_endpoint/driven-adapter/axios'
 
 class ImplementationAxios implements Repository {
 
@@ -13,9 +13,10 @@ class ImplementationAxios implements Repository {
     async save (_data: Entity): Promise<Entity | null> {
         try{
             const body : Entity = {
-                name: _data.name,
-                upstream_url: _data.upstream_url,
-                origin_urls: _data.origin_urls,
+                active: _data?.active,
+                app_id: _data?.app_id,
+                method: _data?.method,
+                route: _data?.route
             }
             const { data } : { data: Entity } = await Axios.create(body);
             return data

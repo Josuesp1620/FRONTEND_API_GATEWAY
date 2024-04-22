@@ -21,7 +21,7 @@ export const fetchAll = createAsyncThunk(
       return entities
     } catch (error) {
       console.error("Error fetching:", error);
-      throw error; // Propaga el error para que Redux Toolkit lo maneje
+      throw error;
     }
   },
 )
@@ -62,6 +62,3 @@ export const {
 } = gateway_application_slice.actions;
 
 export default gateway_application_slice.reducer;
-
-// Llamada a fetchAll en el mismo slice para ejecutarla al inicio
-fetchAll(); // Esto lanzará la acción fetchAll al inicio para obtener los datos de la aplicación del gateway
