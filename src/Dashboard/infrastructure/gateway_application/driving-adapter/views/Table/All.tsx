@@ -7,23 +7,16 @@ import { TabsContent, } from '@/components/ui/tabs'
 import { Input } from '@/components/ui/input'
 import React from 'react'
 import clsx from 'clsx'
-import { fetchAll as fetchAllApplication} from '@/redux/features/gatewayApplicationSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { GatewayApplicationEntity as Entity } from '@/Dashboard/domain/gateway_application/entities'
 import { deleteEntity } from '../../helpers/deleteEntity'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Link } from 'react-router-dom'
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { fetchAll as fetchAllEndPoint } from '@/redux/features/gatewayEndPointSlice'
 
 export const TableAll = () => {
     const dispatch = useAppDispatch();
     const entities = useAppSelector((state) => state.gatewayApplicationReducer);
-
-    React.useEffect(() => {
-        dispatch(fetchAllApplication())
-        dispatch(fetchAllEndPoint())
-    }, []);
     
     return (
         <TabsContent value='all'>

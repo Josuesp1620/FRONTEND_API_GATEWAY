@@ -13,11 +13,11 @@ const initialState: GatewayEndPointSlice = {
 
 export const fetchAll = createAsyncThunk(
   "gatewayEndPoint/fetchAll",
-  async (app_id : string) => {
+  async () => {
     try {      
       const axiosRepository = new ImplementationAxios();
       const useCase = new UseCase(axiosRepository);
-      const entities: Entity[] | null = await useCase.run(app_id)
+      const entities: Entity[] | null = await useCase.run()
       return entities
     } catch (error) {
       console.error("Error fetching:", error);

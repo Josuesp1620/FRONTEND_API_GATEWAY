@@ -8,6 +8,8 @@ import clsx from "clsx";
 
 export const CadEndpoint = ({app_id}:{ app_id : string}) => {  
   const entities = useAppSelector((state) => state.gatewayEndPointReducer);
+  console.log(entities.gatewayEndPoint?.filter((entity) => entity.app_id === app_id))
+  console.log(entities.gatewayEndPoint)
   const filteredEntities : Entity[] | undefined = entities.gatewayEndPoint?.filter((entity) => entity.app_id === app_id);
   
 

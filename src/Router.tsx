@@ -1,7 +1,26 @@
-import { createBrowserRouter } from 'react-router-dom'
-import { RoutesDashboard } from './Dashboard/Router'
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { dashboardRoutes } from './Dashboard/routes';
+import { Dashboard } from './Dashboard';
 
-const routerBase = createBrowserRouter([
-    ...RoutesDashboard
-], { basename: "/web" })
-export default routerBase
+const RouteIndex = () => {
+  return (
+    <React.Fragment>
+      <Routes>
+        {dashboardRoutes.map((route: any, idx: number) => (
+          <Route
+            key={idx}
+            path={route.path}
+            element={
+              <Dashboard>
+                <route.component />
+              </Dashboard>
+            }
+          />
+        ))}        
+      </Routes>
+    </React.Fragment>
+  );
+};
+
+export default RouteIndex;
