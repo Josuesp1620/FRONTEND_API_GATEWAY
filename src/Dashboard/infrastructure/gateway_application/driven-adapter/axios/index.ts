@@ -6,7 +6,6 @@ class GatewayApplicationAdapter {
   private _axios: AxiosConfig;
 
   constructor(baseUrl: string) {
-    console.log(baseUrl)
     this._axios = new AxiosConfig(baseUrl);
     this._axios.setHeaders({
       "Content-Type": "application/json"
